@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fake DDoS Demo Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            background: linear-gradient(135deg, #232526 0%, #414345 100%);
+            color: #fff;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            background: rgba(34, 34, 34, 0.95);
+            border-radius: 18px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            padding: 40px 32px 32px 32px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            margin-top: 40px;
+        }
+        h1 {
+            font-size: 2.2em;
+            margin-bottom: 0.3em;
+            letter-spacing: 1px;
+        }
+        p {
+            color: #a0a0a0;
+            font-size: 1.1em;
+            margin-bottom: 2em;
+        }
+        .counter-label {
+            font-size: 1.2em;
+            color: #8ecae6;
+            margin-bottom: 0.5em;
+        }
+        .counter {
+            font-size: 3em;
+            font-weight: bold;
+            color: #ffb703;
+            letter-spacing: 2px;
+            margin-bottom: 1em;
+            text-shadow: 0 2px 8px #0008;
+            transition: color 0.2s;
+        }
+        .credit {
+            margin-top: 2em;
+            font-size: 1em;
+            color: #bdbdbd;
+            letter-spacing: 0.5px;
+        }
+        .credit a {
+            color: #8ecae6;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .credit a:hover {
+            text-decoration: underline;
+            color: #ffb703;
+        }
+        @media (max-width: 500px) {
+            .container { padding: 20px 5vw 18px 5vw; }
+            h1 { font-size: 1.4em; }
+            .counter { font-size: 2em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Fake DDoS Demo Page</h1>
+        <p>
+            This is a safe, local web page for demonstrating DDoS simulations.<br>
+            Watch the live request counter increase as you run your simulator!
+        </p>
+        <div class="counter-label">Requests received:</div>
+        <div class="counter" id="reqCount">0</div>
+        <div class="credit">
+            &copy; 2025 <a href="https://github.com/worksbyahamed" target="_blank">worksbyahamed</a>
+        </div>
+    </div>
+    <script>
+        function updateCounter() {
+            fetch('/count')
+                .then(response => response.json())
+                .then(data => {
+                    const counter = document.getElementById('reqCount');
+                    counter.textContent = data.count;
+                    counter.style.color = "#ffb703";
+                    setTimeout(() => { counter.style.color = "#8ecae6"; }, 200);
+                });
+        }
+        setInterval(updateCounter, 1000);
+        updateCounter();
+    </script>
+</body>
+</html>
